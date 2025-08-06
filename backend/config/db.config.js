@@ -56,5 +56,5 @@ export const connectDb = async () => {
     }
   }
 
-  // await sequelize.sync({ force: false });
+  await sequelize.sync({ force: false });
 };

@@ -118,20 +118,24 @@ export const getAccountsFromDatabaseTest = async () => {
 export const getDataHierarchical = async () => {
   const data = await getAccountsFromDatabase();
 
-  const accountsMap = new Map();
-  const childrenMap = new Map();
+  const accountsMap = new Map(); // gelen hesapları tutacak yapı
+  const childrenMap = new Map(); // her bir hesabın alt hesaplarını tutacak olan yapı (varsa)   {id:, []}
 
-  // Map'leri doldur
+  // gelen datayı gez
   data.forEach((hesap) => {
+    // hesapları id ile map'e ekle
     accountsMap.set(hesap.id, {
       ...hesap.toJSON(),
-      // children array'ini burada ekleme, buildHierarchy'de gerekirse eklenecek
     });
 
+    // ilgili hesabın üst'ü varsa
     if (hesap.ust_hesap_id) {
+      // bu üst hesap, childrenMap'te yoksa
       if (!childrenMap.has(hesap.ust_hesap_id)) {
+        // childrenMap'te yeni bir children array'i oluştur
         childrenMap.set(hesap.ust_hesap_id, []);
       }
+      // hesabı childrenMap'te ilgili üst hesabın children array'ine ekle
       childrenMap.get(hesap.ust_hesap_id).push(hesap.id);
     }
   });
@@ -139,7 +143,8 @@ export const getDataHierarchical = async () => {
   // Virtual ana hesapları oluştur (120, 153, 191, vs.)
   const virtualMainAccounts = new Set();
   data.forEach((hesap) => {
-    // Eğer ust_hesap_id varsa ve accountsMap'te yoksa, virtual ana hesap oluştur
+    // en üst ana hesaplar data içinde gelmiyor,
+    // ondan dolayı kendimiz oluşturuyoruz kategori gibi
     if (hesap.ust_hesap_id && !accountsMap.has(hesap.ust_hesap_id)) {
       virtualMainAccounts.add(hesap.ust_hesap_id);
     }
@@ -149,14 +154,12 @@ export const getDataHierarchical = async () => {
   virtualMainAccounts.forEach((mainId) => {
     accountsMap.set(mainId, {
       id: mainId,
-      key: mainId,
       hesap_kodu: mainId.toString(),
       hesap_adi: `ANA HESAP ${mainId}`,
       tipi: "MAIN",
       ust_hesap_id: null,
       borc: 0,
       alacak: 0,
-      // children array'ini burada ekleme, buildHierarchy'de gerekirse eklenecek
     });
   });
 
@@ -182,9 +185,7 @@ export const getDataHierarchical = async () => {
     };
 
     if (children && children.length > 0) {
-      result.children = children
-        .map((childId) => buildHierarchy(childId))
-        .sort((a, b) => a.hesap_kodu.localeCompare(b.hesap_kodu));
+      result.children = children.map((childId) => buildHierarchy(childId)).sort((a, b) => a.hesap_kodu.localeCompare(b.hesap_kodu));
     }
     // Boş children array'ini ekleme - sadece gerçekten children varsa ekle
 

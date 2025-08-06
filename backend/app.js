@@ -3,13 +3,14 @@ import dotenv from "dotenv";
 import express from "express";
 import { fileURLToPath } from "url";
 import { dirname, join } from "path";
-import { connectDb, sequelize } from "./config/db.config.js";
 import accountsRouter from "./routes/account.routes.js";
-import { apiReference } from "@scalar/express-api-reference";
 import { syncData } from "./services/database.service.js";
+import { connectDb, sequelize } from "./config/db.config.js";
+import { apiReference } from "@scalar/express-api-reference";
 
 const __filename = fileURLToPath(import.meta.url);
 const __dirname = dirname(__filename);
+
 dotenv.config();
 
 const app = express();
@@ -40,10 +41,9 @@ await connectDb();
 
 setInterval(async () => {
   await syncData();
-}, 300000);
+}, 3000);
 
 app.use("/api/accounts", accountsRouter);
-// app.use("/api/accounts", accountsRouter);
 
 app.listen(process.env.PORT || 3000, async () => {
   console.log(`Server is running on port ${process.env.PORT || 3000}`);

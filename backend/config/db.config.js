@@ -6,18 +6,18 @@ dotenv.config();
 const { DATABASE_NAME, DATABASE_USER, DATABASE_PASSWORD, PROD_DB_URL, NODE_ENV } = process.env;
 
 // Production ortamında DATABASE_URL kullan, development'ta ayrı parametreler
-const isProduction = NODE_ENV === 'production';
+const isProduction = NODE_ENV === "production";
 
-export const sequelize = isProduction 
+export const sequelize = isProduction
   ? new Sequelize(PROD_DB_URL, {
       dialect: "postgres",
       logging: false,
       dialectOptions: {
         ssl: {
           require: true,
-          rejectUnauthorized: false
-        }
-      }
+          rejectUnauthorized: false,
+        },
+      },
     })
   : new Sequelize(DATABASE_NAME, DATABASE_USER, DATABASE_PASSWORD, {
       host: "localhost",

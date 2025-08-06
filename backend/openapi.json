@@ -1,0 +1,164 @@
+{
+  "openapi": "3.1.1",
+  "info": {
+    "title": "ETRSOFT API",
+    "version": "1.0.0",
+    "description": "ETRSOFT Backend API Documentation"
+  },
+  "servers": [
+    {
+      "url": "http://localhost:3000/api",
+      "description": "Development server"
+    }
+  ],
+  "paths": {
+    "/accounts/get-data": {
+      "get": {
+        "summary": "Get accounts data",
+        "description": "Fetches accounts data from external FileMaker API and returns it",
+        "tags": ["Accounts"],
+        "responses": {
+          "200": {
+            "description": "Successful response with accounts data",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "type": "array",
+                  "items": {
+                    "type": "object",
+                    "properties": {
+                      "id": {
+                        "type": "integer",
+                        "description": "Account ID"
+                      },
+                      "hesap_kodu": {
+                        "type": "string",
+                        "description": "Account code (e.g., 120.01)"
+                      },
+                      "hesap_adi": {
+                        "type": "string",
+                        "description": "Account name"
+                      },
+                      "tipi": {
+                        "type": "string",
+                        "description": "Account type"
+                      },
+                      "ust_hesap_id": {
+                        "type": "integer",
+                        "description": "Parent account ID"
+                      },
+                      "borc": {
+                        "type": "number",
+                        "format": "float",
+                        "description": "Debt amount"
+                      },
+                      "alacak": {
+                        "type": "number",
+                        "format": "float",
+                        "description": "Credit amount"
+                      },
+                      "borc_sistem": {
+                        "type": "number",
+                        "format": "float",
+                        "description": "System debt amount"
+                      },
+                      "alacak_sistem": {
+                        "type": "number",
+                        "format": "float",
+                        "description": "System credit amount"
+                      },
+                      "borc_doviz": {
+                        "type": "number",
+                        "format": "float",
+                        "description": "Foreign currency debt amount"
+                      },
+                      "alacak_doviz": {
+                        "type": "number",
+                        "format": "float",
+                        "description": "Foreign currency credit amount"
+                      },
+                      "borc_islem_doviz": {
+                        "type": "number",
+                        "format": "float",
+                        "description": "Transaction foreign currency debt"
+                      },
+                      "alacak_islem_doviz": {
+                        "type": "number",
+                        "format": "float",
+                        "description": "Transaction foreign currency credit"
+                      },
+                      "birim_adi": {
+                        "type": "string",
+                        "description": "Unit name"
+                      },
+                      "bakiye_sekli": {
+                        "type": "integer",
+                        "description": "Balance type"
+                      },
+                      "aktif": {
+                        "type": "integer",
+                        "description": "Active status (0 or 1)"
+                      },
+                      "dovizkod": {
+                        "type": "integer",
+                        "description": "Currency code"
+                      }
+                    }
+                  }
+                }
+              }
+            }
+          },
+          "500": {
+            "description": "Internal Server Error",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "type": "object",
+                  "properties": {
+                    "error": {
+                      "type": "string",
+                      "example": "Internal Server Error"
+                    }
+                  }
+                }
+              }
+            }
+          }
+        }
+      }
+    },
+    "accounts/test": {
+      "get": {
+        "summary": "Get Accounts TEST",
+        "description": "Get Accounts TEST",
+        "parameters": [],
+        "tags": ["Accounts"],
+        "responses": {
+          "200": {
+            "description": "OK"
+          }
+        }
+      }
+    },
+    "accounts/hierarchical": {
+      "get": {
+        "summary": "Get Accounts Hierarchical",
+        "description": "Get Accounts Hierarchical",
+        "parameters": [],
+        "tags": ["Accounts"],
+        "responses": {
+          "200": {
+            "description": "OK"
+          }
+        }
+      }
+    }
+  },
+  "tags": [
+    {
+      "name": "Accounts",
+      "description": "Operations related to accounts data"
+    }
+  ]
+}

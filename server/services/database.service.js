@@ -1,6 +1,5 @@
 import Account from "../models/account.model.js";
 import { getDataFromApi } from "./external-api.service.js";
-import { Sequelize } from "sequelize";
 
 // Yardımcı fonksiyon: Sayısal alanları düzelt
 const fixNumberFields = (item) => {

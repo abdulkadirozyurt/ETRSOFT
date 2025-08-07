@@ -1,7 +1,6 @@
 import Account from "../models/account.model.js";
 import { getDataFromApi } from "./external-api.service.js";
 
-// Yardımcı fonksiyon: Sayısal alanları düzelt
 const fixNumberFields = (item) => {
   const numberFields = ["borc", "alacak", "borc_sistem", "alacak_sistem", "borc_doviz", "alacak_doviz", "borc_islem_doviz", "alacak_islem_doviz"];
   for (const field of numberFields) {
@@ -10,20 +9,41 @@ const fixNumberFields = (item) => {
   return item;
 };
 
-// Yardımcı fonksiyon: Hesap kaydını oluştur veya güncelle
+const hasChanges = (existingData, newData) => {
+  const excludeFields = ["createdAt", "updatedAt"];
+
+  for (const field of Object.keys(newData)) {
+    if (excludeFields.includes(field)) continue;
+
+    const existingValue = existingData[field] ?? null;
+    const newValue = newData[field] ?? null;
+
+    if (existingValue !== newValue) {
+      return true;
+    }
+  }
+
+  return false;
+};
+
 const upsertAccount = async (item) => {
   const existing = await Account.findOne({ where: { id: item.id } });
   if (existing) {
-    await existing.update({ ...item });
+    if (hasChanges(existing, item)) {
+      await existing.update({ ...item });
+      return "updated";
+    }
+    return "unchanged";
   } else {
     await Account.create({ ...item });
+    return "created";
   }
 };
 
-// API'den veri çekip veritabanına kaydet
 export const syncData = async () => {
   try {
     const apiData = await getDataFromApi();
+
     for (const item of apiData) {
       await upsertAccount(fixNumberFields(item));
     }
@@ -32,7 +52,6 @@ export const syncData = async () => {
   }
 };
 
-// Tüm hesapları sırayla getir
 export const getAccountsFromDatabase = async () => {
   try {
     return await Account.findAll({ order: [["hesap_kodu", "ASC"]] });

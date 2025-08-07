@@ -10,7 +10,7 @@ export const ListAccounts = () => {
   const getAllKeys = (rows) => {
     let keys = [];
     rows.forEach((row) => {
-      keys.push(row.key || row.id);
+      keys.push(row.id);
       if (row.children && row.children.length > 0) {
         keys = keys.concat(getAllKeys(row.children));
       }
@@ -31,20 +31,20 @@ export const ListAccounts = () => {
       title: "Hesap Kodu",
       dataIndex: "hesap_kodu",
       key: "hesap_kodu",
-      width: 200,
+      width: "25%",
     },
     {
       title: "Hesap Adı",
       dataIndex: "hesap_adi",
       key: "hesap_adi",
-      width: 300,
+      width: "25%",
     },
     {
       title: "Borç",
       dataIndex: "borc",
       key: "borc",
       align: "right",
-      width: 150,
+      width: "25%",
       render: (value) =>
         new Intl.NumberFormat("tr-TR", {
           style: "currency",
@@ -56,7 +56,7 @@ export const ListAccounts = () => {
       dataIndex: "alacak",
       key: "alacak",
       align: "right",
-      width: 150,
+      width: "25%",
       render: (value) =>
         new Intl.NumberFormat("tr-TR", {
           style: "currency",
@@ -73,7 +73,7 @@ export const ListAccounts = () => {
       setData(response.data);
     } catch (error) {
       console.error("Veri çekme hatası:", error);
-      setData([]); // Hata durumunda boş array set et
+      setData([]); 
     } finally {
       setLoading(false);
     }
@@ -86,7 +86,7 @@ export const ListAccounts = () => {
   }, []);
 
   return (
-    <div style={{ marginTop: 48, maxWidth: "100%", overflowX: "auto" }}>
+    <div style={{ marginTop: 48, maxWidth: "70%", overflowX: "auto" }}>
       <div style={{ display: "flex", justifyContent: "flex-end", gap: 8, marginBottom: 16 }}>
         <Space>
           <Button onClick={handleExpandAll}>Tümünü Aç</Button>
@@ -99,6 +99,7 @@ export const ListAccounts = () => {
         dataSource={tableData}
         loading={loading}
         pagination={false}
+        rowKey="id"
         expandable={{
           expandedRowKeys,
           onExpandedRowsChange: setExpandedRowKeys,
@@ -106,7 +107,7 @@ export const ListAccounts = () => {
           rowExpandable: (record) => record.children && record.children.length > 0,
         }}
         scroll={{ y: 500 }}
-        size="small"
+        size="large"
       />
     </div>
   );

@@ -66,7 +66,6 @@ export const getDataHierarchical = async () => {
   const accountsMap = new Map();
   const childrenMap = new Map();
 
-  // Hesapları map'lere yerleştir
   for (const hesap of data) {
     accountsMap.set(hesap.id, { ...hesap.toJSON() });
     if (hesap.ust_hesap_id) {
@@ -75,7 +74,7 @@ export const getDataHierarchical = async () => {
     }
   }
 
-  // Eksik ana hesapları (120, 153, 191 ...) ekle
+  // Eksik ana hesaplar (120, 153, 191 ...)
   const virtualMainAccounts = new Set();
   for (const hesap of data) {
     if (hesap.ust_hesap_id && !accountsMap.has(hesap.ust_hesap_id)) {
@@ -95,7 +94,7 @@ export const getDataHierarchical = async () => {
     });
   }
 
-  // Ana hesapların(120, 153, 191 ...) toplam değerleri hesapla
+  // Ana hesapların(120, 153, 191 ...) toplamları
   for (const hesap of data) {
     if (hesap.ust_hesap_id && virtualMainAccounts.has(hesap.ust_hesap_id)) {
       const mainAccount = accountsMap.get(hesap.ust_hesap_id);
@@ -104,7 +103,7 @@ export const getDataHierarchical = async () => {
     }
   }
 
-  // Hiyerarşi oluştur
+  
   const buildHierarchy = (hesapId) => {
     const hesap = accountsMap.get(hesapId);
     const children = childrenMap.get(hesapId);

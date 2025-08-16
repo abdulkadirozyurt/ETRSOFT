@@ -6,7 +6,7 @@ RUN npm install
 COPY . .
 
 # Build arg
-ARG VITE_PROD_API_URL
+ARG VITE_PROD_API_URL=http://vcgs848ws00os4osco4sogkk.31.57.154.115.sslip.io/api
 ENV VITE_PROD_API_URL=${VITE_PROD_API_URL}
 
 # Build frontend

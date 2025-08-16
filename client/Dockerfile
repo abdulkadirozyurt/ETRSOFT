@@ -1,10 +1,11 @@
 # Build stage
 FROM node:18-alpine AS build
-ENV VITE_APP_MODE=production
 WORKDIR /app
 COPY package.json package-lock.json* ./
 RUN npm ci || npm install
 COPY . .
+ARG VITE_PROD_API_URL
+ENV VITE_PROD_API_URL=$VITE_PROD_API_URL
 RUN npm run build:prod
 
 # Production stage

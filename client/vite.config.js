@@ -8,4 +8,13 @@ export default defineConfig({
     host: "0.0.0.0",
     port: 5173,
   }
+  ,
+  environments: {
+    production: {
+      apiUrl: import.meta.env.VITE_PROD_API_URL,
+    },
+    development: {
+      apiUrl: import.meta.env.VITE_DEV_API_URL,
+    },
+  }
 })

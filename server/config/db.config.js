@@ -12,12 +12,13 @@ export const sequelize = isProduction
   ? new Sequelize(PROD_DB_URL, {
       dialect: "postgres",
       logging: false,
-      dialectOptions: {
-        ssl: {
-          require: false,
-          rejectUnauthorized: false,
-        },
-      },
+      // dialectOptions: {
+      //   ssl: {
+      //     require: true,
+      //     rejectUnauthorized: false,
+      //   },
+      // },
+      dialectOptions: {},
     })
   : new Sequelize(DATABASE_NAME, DATABASE_USER, DATABASE_PASSWORD, {
       host: "localhost",

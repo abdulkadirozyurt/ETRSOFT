@@ -1,5 +1,6 @@
 # Build stage
 FROM node:18-alpine AS build
+ENV VITE_APP_MODE=production
 WORKDIR /app
 COPY package.json package-lock.json* ./
 RUN npm ci || npm install
@@ -10,5 +11,4 @@ RUN npm run build:prod
 FROM nginx:stable-alpine
 COPY --from=build /app/dist /usr/share/nginx/html
 EXPOSE 80
-ENV VITE_APP_MODE=production
 CMD ["nginx", "-g", "daemon off;"]

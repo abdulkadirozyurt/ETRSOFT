@@ -13,22 +13,15 @@ services:
       - "5432:5432"
 
   server:
-    build: ./server
+    build: .
     environment:
       NODE_ENV: production
-      PROD_DB_URL: postgres://postgres:TfT7JqYRUrrL6vmA8fJFn0TTqrFviip2iJQnJGoD6DGPdSDlo39ec8hHXYGn0Mkx@y4cs40gw0wwg84kgkgk4wwk4:5432/postgres
+      PROD_DB_URL: postgres://postgres:postgres@db:5432/postgres
       PORT: 3000
     depends_on:
       - db
     ports:
       - "3000:3000"
-
-  client:
-    build: ./client
-    ports:
-      - "5173:80"
-    depends_on:
-      - server
 
 volumes:
   db_data:

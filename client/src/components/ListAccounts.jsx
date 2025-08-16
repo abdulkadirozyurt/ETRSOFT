@@ -1,4 +1,4 @@
-import axios from "axios";
+import { api } from "../services/apiClient";
 import { useEffect, useState } from "react";
 import { Table, Button, Space } from "antd";
 
@@ -68,8 +68,7 @@ export const ListAccounts = () => {
   const fetchData = async () => {
     try {
       setLoading(true);
-      const apiUrl = import.meta.env.VITE_API_URL;
-      const response = await axios.get(`${apiUrl}/accounts/hierarchical`);
+      const response = await api.get("/accounts/hierarchical");
       setData(response.data);
     } catch (error) {
       console.error("Veri çekme hatası:", error);

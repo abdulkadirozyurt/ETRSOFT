@@ -16,9 +16,35 @@
     }
   ],
   "paths": {
+    "/accounts/get-from-api": {
+      "get": {
+        "summary": "Get accounts from external API",
+        "description": "Fetches accounts data from an external FileMaker API and returns it",
+        "tags": ["Accounts"],
+        "responses": {
+          "200": {
+            "description": "Successful response with accounts data",
+            "content": {
+              "application/json": {
+                "schema": {}
+              }
+            }
+          },
+          "500": {
+            "description": "Internal Server Error",
+            "content": {
+              "application/json": {
+                "schema": {}
+              }
+            }
+          }
+        }
+      }
+    },
+
     "/accounts/get-data": {
       "get": {
-        "summary": "Get accounts data",
+        "summary": "Get accounts raw data",
         "description": "Fetches accounts data from external FileMaker API and returns it",
         "tags": ["Accounts"],
         "responses": {
@@ -132,20 +158,7 @@
         }
       }
     },
-    "accounts/test": {
-      "get": {
-        "summary": "Get Accounts TEST",
-        "description": "Get Accounts TEST",
-        "parameters": [],
-        "tags": ["Accounts"],
-        "responses": {
-          "200": {
-            "description": "OK"
-          }
-        }
-      }
-    },
-    "accounts/hierarchical": {
+    "/accounts/hierarchical": {
       "get": {
         "summary": "Get Accounts Hierarchical",
         "description": "Get Accounts Hierarchical",

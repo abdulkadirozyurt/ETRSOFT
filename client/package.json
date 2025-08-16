@@ -4,10 +4,14 @@
   "version": "0.0.0",
   "type": "module",
   "scripts": {
-    "dev": "vite",
-    "build": "vite build",
-    "lint": "eslint .",
-    "preview": "vite preview"
+  "dev": "vite",
+  "dev:local": "cross-env VITE_APP_MODE=development vite",
+  "dev:prod": "cross-env VITE_APP_MODE=production vite",
+  "build": "vite build",
+  "build:prod": "cross-env VITE_APP_MODE=production vite build",
+  "lint": "eslint .",
+  "preview": "vite preview",
+  "serve:prod": "npm run build:prod && vite preview"
   },
   "dependencies": {
     "@ant-design/v5-patch-for-react-19": "^1.0.3",
@@ -27,6 +31,7 @@
     "eslint-plugin-react-hooks": "^5.2.0",
     "eslint-plugin-react-refresh": "^0.4.20",
     "globals": "^16.3.0",
-    "vite": "^7.0.4"
+  "vite": "^7.0.4",
+  "cross-env": "^7.0.3"
   }
 }

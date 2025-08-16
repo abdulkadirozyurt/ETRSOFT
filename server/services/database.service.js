@@ -103,7 +103,6 @@ export const getDataHierarchical = async () => {
     }
   }
 
-  
   const buildHierarchy = (hesapId) => {
     const hesap = accountsMap.get(hesapId);
     const children = childrenMap.get(hesapId);

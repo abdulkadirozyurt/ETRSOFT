@@ -14,7 +14,7 @@ export const sequelize = isProduction
       logging: false,
       dialectOptions: {
         ssl: {
-          require: true,
+          require: false,
           rejectUnauthorized: false,
         },
       },

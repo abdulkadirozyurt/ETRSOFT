@@ -13,7 +13,7 @@ import axios from "axios";
 // };
 
 const resolveBaseURL = () => {
-  return `${import.meta.env.VITE_PROD_API_URL}/api`;
+  return `http://vcgs848ws00os4osco4sogkk.31.57.154.115.sslip.io/api`;
 };
 
 export const apiBaseURL = resolveBaseURL();

@@ -28,6 +28,11 @@ app.get("/openapi.json", (req, res) => {
   res.sendFile(join(__dirname, "openapi.json"));
 });
 
+// simple health endpoint for readiness checks
+app.get('/health', (req, res) => {
+  res.json({ status: 'ok', uptime: process.uptime() });
+});
+
 // API referans arayüzünü, yukarıda oluşturulan URL'yi kullanacak şekilde yapılandır
 app.use(
   "/scalar/v1",

@@ -8,7 +8,7 @@
   "dev:local": "cross-env VITE_APP_MODE=development vite",
   "dev:prod": "cross-env VITE_APP_MODE=production vite",
   "build": "vite build",
-  "build:prod": "cross-env VITE_APP_MODE=production vite build --mode production",
+  "build:prod": "cross-env VITE_APP_MODE=production vite build",
   "lint": "eslint .",
   "preview": "vite preview",
   "serve:prod": "npm run build:prod && vite preview"
